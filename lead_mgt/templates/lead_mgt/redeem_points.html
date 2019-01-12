@@ -1,0 +1,173 @@
+
+{% extends 'lead_mgt/index-3.html' %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+        <!-- Start Status area -->
+    <div class="notika-status-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
+                    <div class="left_bar notika-shadow  sm-res-mg-t-0">
+                        <div class="avatar">
+                            <h2>{{ user.get_full_name|default:user.username }}</h2>
+                            <p>{{ user.profile.ref_code }}</p>
+                        </div>
+
+                        <div>
+                            <p>Your referral link</p>
+                            <p>{{ link }}</p>
+                        </div>
+
+                        <div>
+                            <div class="recent-items-ctn">
+                                <div class="side-title">
+                                    <h3>Points balance</h3>
+                                </div>
+                            </div>
+                            <div class="recent-items-inn">
+                                <div class="website-traffic-ctn div_centre mg-t-30">
+                                    <h2 class="text-center"><span class="counter">{{ points_balance | intcomma }}</span></h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mg-t-30">
+                            <div class="recent-items-ctn">
+                                <div class="side-title">
+                                    <h3>Account balance</h3>
+                                </div>
+                            </div>
+                            <div class="recent-items-inn">
+                                <div class="website-traffic-ctn div_centre mg-t-30">
+                                    <h2 class="text-center">$<span class="counter">{{ wallet_balance | intcomma }}</span></h2>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12">
+
+                    <div class="row">
+                        {% for option in options_1 %}
+                            {% if option.points <= points_balance %}
+                                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                <a href="{% url 'lead_mgt:redeem' option.id %}">
+                                    <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 text-center hover">
+                                        <div class="website-traffic-ctn div_centre mg-tb-30">
+                                            <h2 class="points"><span class="counter">{{ option.points | intcomma }}</span></h2>
+                                            <p class="pts">points</p>
+                                            <div class="mg-t-30">
+                                                <p>You get <span class="amt">${{ option.amount | intcomma}}</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            {% else %}
+                                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 text-center ">
+                                        <div class="website-traffic-ctn div_centre mg-tb-30" style="color: #DADADA">
+                                            <h2 class="points" style="color: #DADADA"><span class="counter">{{ option.points | intcomma }}</span></h2>
+                                            <p class="pts" style="color: #DADADA">points</p>
+                                            <div class="mg-t-30">
+                                                <p style="color: #DADADA">You get <span class="amt">${{ option.amount | intcomma}}</span></p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <div class="row mg-t-30">
+                        {% for option in options_2 %}
+                            {% if option.points <= points_balance %}
+                                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                <a href="{% url 'lead_mgt:redeem' option.id %}">
+                                    <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 text-center hover">
+                                        <div class="website-traffic-ctn div_centre mg-tb-30">
+                                            <h2 class="points"><span class="counter">{{ option.points | intcomma }}</span></h2>
+                                            <p class="pts">points</p>
+                                            <div class="mg-t-30">
+                                                <p>You get <span class="amt">${{ option.amount | intcomma}}</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            {% else %}
+                                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 text-center ">
+                                        <div class="website-traffic-ctn div_centre mg-tb-30" style="color: #DADADA">
+                                            <h2 class="points" style="color: #DADADA"><span class="counter">{{ option.points | intcomma }}</span></h2>
+                                            <p class="pts" style="color: #DADADA">points</p>
+                                            <div class="mg-t-30">
+                                                <p style="color: #DADADA">You get <span class="amt">${{ option.amount | intcomma}}</span></p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- End Status area-->
+
+
+{% endblock %}
+
+{% block script %}
+    <!--script>
+    	var ctx = document.getElementById("barchart2");
+        var barchart2 = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [{% for label in labels %}"{{ label }}",{% endfor %}],
+                datasets: [{
+                    label: 'Total leads',
+                    data: {{ leads }},
+                    borderWidth: 1,
+                    backgroundColor: 'rgba(132, 165, 62, 0.2)',
+                    borderColor: 'rgba(132, 165, 62, 1)',
+                }, {
+                    label: 'Conversions',
+                    data: {{ conv }},
+                    backgroundColor: 'rgba(90, 195, 214, 0.2)',
+                    borderColor: 'rgba(90, 195, 214, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false,
+                    text: 'Bar Chart Vertical'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+    </script-->
+
+{% endblock %}

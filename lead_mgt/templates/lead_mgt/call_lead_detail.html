@@ -1,0 +1,315 @@
+
+{% extends 'lead_mgt/index-3.html' %}
+{% load humanize %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+
+    <!-- Breadcomb area Start-->
+	<div class="breadcomb-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="breadcomb-list">
+						<div class="row">
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+								<div class="breadcomb-wp">
+									<div class="breadcomb-icon">
+										<i class="notika-icon notika-windows"></i>
+									</div>
+									<div class="breadcomb-ctn">
+										<h2>{{ lead.title }} {{ lead.first_name }} {{ lead.last_name }}</h2>
+										<p>{{ lead.phone_number }}</p>
+                                        <p>{{ lead.status }}</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+								<div class="breadcomb-report">
+									<button data-toggle="tooltip" data-placement="left" title="Edit" class="btn"><i class="notika-icon notika-draft"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Breadcomfb area End-->
+
+        <!-- Start Status area -->
+    <div class="notika-status-area">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="contact-inner">
+                        <div class="contact-hd widget-ctn-hd">
+                            <h2>Lead Information</h2>
+                            <p>Fusce eget dolor id justo luctus commodo vel pharetra nisi. Donec velit libero</p>
+                        </div>
+                        <div class="contact-dt">
+                            <ul class="contact-list widget-contact-list">
+
+                                <li><i class="notika-icon notika-calendar"></i>Affiliate</li>
+                                <p>{{ lead.agent.get_full_name }}</p>
+
+                                <li><i class="notika-icon notika-calendar"></i> lead date</li>
+                                <p>{{ lead.lead_date }}</p>
+
+                                <li><i class="notika-icon notika-map"></i>city</li>
+                                <p>Harare</p>
+
+                                <li><i class="notika-icon notika-mail"></i>email</li>
+                                <p>rayjowa@gmail.com</p>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+                    <form action="{% url 'lead_mgt:call_lead_detail' lead.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-example-wrap mg-b-15 vehicles">
+                            <div class="cmp-tb-hd cmp-int-hd">
+                                <h2>Vehicles</h2>
+                            </div>
+                            {{ vehicle_formset.management_form }}
+
+                            {% for form in vehicle_formset %}
+                                {{ form.non_field_errors }}
+                                <div id="{{ form.prefix }}-row" class="row mg-t-10 dynamic-form">
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        <div class="form-example-int form-example-st">
+                                            <div class="form-group">
+                                                {{ form.make.errors }}
+                                                <div class="nk-int-st">
+                                                    {% render_field form.make class="form-control input-sm" placeholder=form.make.label %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        <div class="form-example-int form-example-st">
+                                            <div class="form-group">
+                                                {{ form.vehicle_model.errors }}
+                                                <div class="nk-int-st">
+                                                    {% render_field form.vehicle_model class="form-control input-sm" placeholder=form.vehicle_model.label %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                        <div class="form-example-int form-example-st">
+                                            <div class="form-group">
+                                                {{ form.reg_number.errors }}
+                                                <div class="nk-int-st">
+                                                    {% render_field form.reg_number class="form-control input-sm" placeholder=form.reg_number.label %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                        <div class="form-example-int form-example-st">
+                                            <div class="form-group">
+                                                {{ form.insurance_expiry.errors }}
+                                                <div class="nk-int-st">
+                                                    {% render_field form.insurance_expiry class="form-control input-sm" placeholder=form.insurance_expiry.label %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                        {% if form.initial.status == 'open'  %}
+                                            <button data-toggle="tooltip" data-placement="right" title="" type="button" class="btn" data-original-title="Sale" onclick="toggle('{{ form.prefix }}')"><i class="notika-icon notika-checked"></i></button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="row mg-t-15 margin-40-bottom" style="display: none" id="{{ form.prefix }}">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        <div class="form-example-int form-example-st">
+                                            <div class="form-group">
+                                                {{ form.status.errors }}
+                                                <div class="nk-int-st">
+                                                    {% render_field form.status class="form-control input-sm" placeholder=form.status.label %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+
+
+
+                                        <div class="form-example-int form-example-st">
+                                            <div class="form-group">
+                                                {{ form.policy_type.errors }}
+                                                <div class="nk-int-st">
+                                                    {% render_field form.policy_type class="form-control input-sm" placeholder=form.policy_type.label %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-example-int form-example-st">
+                                            <div class="form-group">
+                                                {{ form.policy_number.errors }}
+                                                <div class="nk-int-st">
+                                                    {% render_field form.policy_number class="form-control input-sm" placeholder=form.policy_number.label %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+
+                                            <button data-toggle="tooltip" data-placement="left" title="" type="button" class="btn std-background" data-original-title="" onclick="updateVehicle({{ form.initial.id }},'{{ form.prefix }}')">Update</button>
+
+                                    </div>
+
+
+                                </div>
+                            {% endfor %}
+
+                             <a href="javascript:void(0)" class="add-row btn btn-primary notika-btn-primary mg-t-15">Add vehicle</a>
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="rc-it-ltd height-430">
+                                <div class="recent-items-ctn">
+                                    <div class="recent-items-title">
+                                        <h2>Previous calls (<span class="counter">{{ lead.call_set.all.count }}</span>)</h2>
+                                    </div>
+                                </div>
+                                {% if lead.call_set.all %}
+                                    {% for call in lead.call_set.all %}
+                                        <div class="recent-items-inn border_bottom pad-10-b mg-t-10">
+                                            <div class="row">
+                                                <div class="col-xs-8">
+                                                    <h5 class="std-color">{{ call.call_agent.get_full_name }}</h5>
+                                                </div>
+                                                <div class="col-xs-4 text-right">
+                                                    <p>{{ call.close_status }}</p>
+                                                </div>
+                                            </div>
+                                            {% if call.notes %}<p>{{ call.notes }}</p>{% endif %}
+
+                                            <small>{{ call.call_date | naturaltime }}</small>
+                                    </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>This lead has not been called yet</p>
+                                {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="rc-it-ltd">
+                                <div class="recent-items-ctn">
+                                    <div class="recent-items-title">
+                                        <h2>This call</h2>
+                                    </div>
+                                </div>
+                                <div class="recent-items-inn">
+
+                                    <div class="nk-int-mk sl-dp-mn sm-res-mg-t-10">
+                                        <h2>Disposition</h2>
+                                    </div>
+                                    <div class="bootstrap-select fm-cmp-mg">
+                                        {% render_field call_form.close_status class="selectpicker" data-live-search="true" autocomplete="off" %}
+                                    </div>
+
+                                    <div class="mg-t-15">
+                                        <div class="form-group nk-datapk-ctm form-elet-mg" id="data_1">
+                                            <label for="id_next_call_date">Next call date:</label>
+                                            <div class="input-group date nk-int-st">
+                                                <span class="input-group-addon"></span>
+                                                <input type="text" name="next_call_date" autocomplete="off" class="form-control" id="id_next_call_date">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mg-t-15">
+                                        <div class="form-single nk-int-st widget-form">
+                                            {% render_field call_form.notes class="form-control" placeholder="Notes" rows="3" %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="form-single nk-int-st widget-form">
+                                            <input name="policy_number" type="text" class="form-control" placeholder="Policy number">
+                                        </div>
+                                    </div>
+
+                                    <input class="btn btn-success notika-btn-success std-background" type="submit" value="Submit" name="filter">
+
+
+
+                                </div>
+                            </div>
+
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- End Status area-->
+
+
+{% endblock %}
+
+{% block script %}
+     <script type="text/javascript">
+
+        $(function () {
+            $('.add-row').click(function() {
+                return addForm(this, 'vehicle_set');
+            });
+            $('.delete-row').click(function() {
+                return deleteForm(this, 'vehicle_set');
+            })
+        });
+
+        function toggle(id) {
+            console.log(id);
+            $('#'+id).toggle();
+        }
+
+
+        function updateVehicle(vehicle_id, form_prefix) {
+            $.ajax({
+                url: '/update_vehicle/',
+                method: 'POST',
+                data: {
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    vehicle_id: vehicle_id,
+                    status: $('select[name=' + form_prefix + '-status]').val(),
+                    policy_type: $('select[name=' + form_prefix + '-policy_type]').val(),
+                    policy_number: $('input[name=' + form_prefix + '-policy_number]').val(),
+                },
+                success: function (data) {
+                    if (data.status = 'success') {
+                        location.reload(true)
+                    }
+                }
+            });
+        }
+
+
+    </script>
+{% endblock %}

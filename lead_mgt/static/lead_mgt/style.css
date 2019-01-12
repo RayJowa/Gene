@@ -1,0 +1,127 @@
+
+.div_centre {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.border_bottom {
+    border-bottom: #EEE solid 1px;
+}
+
+.side-title {
+
+    width: 100%;
+    background-color: #5AC3D6;
+    padding: 5px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.side-title h3 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.left_bar {
+    background-color: #FFF;
+}
+
+.avatar {
+    padding: 10px 20px;
+    background-color: #84A53E;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+}
+
+.avatar h2 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.avatar p {
+    margin: 0;
+}
+
+.website-traffic-ctn h2 {
+    color: #5AC3D6;
+    font-size: 34px;
+}
+
+.marg-10-top {
+    margin-top: 10px;
+}
+
+.padd-10-top {
+    padding-top: 10px;
+}
+
+
+.pad-10-b {
+    padding-bottom: 10px;
+}
+
+.dash_icons {
+    font-size: 42px;
+
+}
+
+.margin-40-bottom {
+    margin-bottom: 40px;
+}
+
+.std-background {
+    background-color: #84A53E;
+
+}
+
+.std-color {
+    color: #84A53E;
+}
+
+.secondary-background {
+    background-color: #5AC3D6;
+}
+
+.failed {
+    color: red;
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.success {
+    font-weight: 800;
+    color: #84A53E;
+    font-size: 20px;
+}
+
+.height-430 {
+    height: 430px;
+    max-height: 430px;
+    overflow-y: auto;
+}
+
+.vehicles {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.points {
+    margin-bottom: 0;
+}
+
+.pts {
+    color: #5AC3D6;
+    font-size: 18px;
+    font-weight: bolder;
+    margin-bottom: 15px;
+}
+
+.amt {
+    color: #84A53E;
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+.hover:hover {
+    background-color: rgba(90,195,214, 0.2);
+}

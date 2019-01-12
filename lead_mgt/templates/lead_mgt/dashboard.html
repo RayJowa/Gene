@@ -1,0 +1,271 @@
+
+{% extends 'lead_mgt/index-3.html' %}
+{% load static %}
+{% block content %}
+        <!-- Start Status area -->
+    <div class="notika-status-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
+                    <div class="left_bar notika-shadow  sm-res-mg-t-0">
+                        <div class="avatar">
+                            <h2>{{ user.get_full_name|default:user.username }}</h2>
+                            <p>{{ user.profile.ref_code }}</p>
+                        </div>
+
+                        <div>
+                            <div class="recent-items-ctn">
+                                <div class="side-title">
+                                    <h3>Top earners</h3>
+                                </div>
+                            </div>
+                            <div class="recent-items-inn">
+                                <table class="table table-inner table-vmiddle">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th style="width: 60px">Points</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Tinashe</td>
+                                            <td class="f-500 c-cyan">1,230</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Huawei </td>
+                                            <td class="f-500 c-cyan">1,140</td>
+                                        </tr>
+                                        <tr>
+                                            <td>HTC One M8</td>
+                                            <td class="f-500 c-cyan">900</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Samsung </td>
+                                            <td class="f-500 c-cyan">870</td>
+                                        </tr>
+                                        <tr>
+                                            <td>LG G3</td>
+                                            <td class="f-500 c-cyan">790</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="recent-items-ctn">
+                                <div class="side-title" >
+                                    <h3>{% now "F" %} top earners</h3>
+                                </div>
+                            </div>
+                            <div class="recent-items-inn">
+                                <table class="table table-inner table-vmiddle">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th style="width: 60px">Points</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Tinashe</td>
+                                            <td class="f-500 c-cyan">1,230</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Huawei </td>
+                                            <td class="f-500 c-cyan">1,140</td>
+                                        </tr>
+                                        <tr>
+                                            <td>HTC One M8</td>
+                                            <td class="f-500 c-cyan">900</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Samsung </td>
+                                            <td class="f-500 c-cyan">870</td>
+                                        </tr>
+                                        <tr>
+                                            <td>LG G3</td>
+                                            <td class="f-500 c-cyan">790</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 text-center">
+                                <div class="website-traffic-ctn div_centre">
+                                    <h2><span class="counter">{{ total_leads }}</span></h2>
+                                    <p>Total leads</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 text-center">
+                                <div class="website-traffic-ctn div_centre">
+                                    <h2><span class="counter">{{ total_conversion }}</span></h2>
+                                    <p >Total conversions</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 dk-res-mg-t-30 text-center">
+                                <div class="website-traffic-ctn div_centre">
+                                    <h2>$<span class="counter">{{ total_earnings }}</span></h2>
+                                    <p>Total earnings</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 dk-res-mg-t-30 text-center">
+                                <div class="website-traffic-ctn div_centre">
+                                    <h2>$<span class="counter">{{ month_earnings }}</span></h2>
+                                    <p>{% now "F" %} earnings</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sale-statistic-inner notika-shadow mg-tb-30">
+                        <div class="curved-inner-pro">
+                            <div class="curved-ctn">
+                                <h2>Leads by month</h2>
+                            </div>
+                        </div>
+                        <!--div id="bar-chart" class="flot-chart bar-three bar-hm-three"></div-->
+                        <div class="bar-chart-wp sm-res-mg-t-30 chart-display-nn">
+                            <canvas height="75vh" width="180vw" id="barchart2"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="rc-it-ltd">
+                            <div class="recent-items-ctn">
+                                <div class="recent-items-title">
+                                    <h2>Recent sales</h2>
+                                </div>
+                            </div>
+                            <div class="recent-items-inn">
+                                {% if recent_conversions %}
+                                    <table class="table table-inner table-vmiddle">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for lead in recent_conversions %}
+                                            <tr>
+                                                <td class="f-500 c-cyan">{{ lead.title }} {{ lead.first_name }} {{ lead.last_name }}</td>
+                                                <td>{{ lead.status }}</td>
+                                            </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <p>You have no sales yet</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <a href="{% url 'lead_mgt:agent_view_lead' %}">
+                        <div class="rc-it-ltd">
+                            <div class="recent-items-ctn">
+                                <div class="recent-items-title">
+                                    <h2>Recent leads</h2>
+                                </div>
+                            </div>
+                            <div class="recent-items-inn">
+                                {% if recent_leads %}
+                                    <table class="table table-inner table-vmiddle">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for lead in recent_leads %}
+                                            <tr>
+                                                <td class="f-500 c-cyan">{{ lead.title }} {{ lead.first_name }} {{ lead.last_name }}</td>
+                                                <td>{{ lead.status }}</td>
+                                            </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <p>You have no leads yet</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        </a>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- End Status area-->
+
+
+{% endblock %}
+
+{% block script %}
+    <script>
+    	var ctx = document.getElementById("barchart2");
+        var barchart2 = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [{% for label in labels %}"{{ label }}",{% endfor %}],
+                datasets: [{
+                    label: 'Total leads',
+                    data: {{ leads }},
+                    borderWidth: 1,
+                    backgroundColor: 'rgba(132, 165, 62, 0.2)',
+                    borderColor: 'rgba(132, 165, 62, 1)',
+                }, {
+                    label: 'Conversions',
+                    data: {{ conv }},
+                    backgroundColor: 'rgba(90, 195, 214, 0.2)',
+                    borderColor: 'rgba(90, 195, 214, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false,
+                    text: 'Bar Chart Vertical'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+
+{% endblock %}

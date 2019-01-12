@@ -1,0 +1,176 @@
+{% extends 'lead_mgt/index-3.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+    <!-- Breadcomb area Start-->
+	<div class="breadcomb-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="breadcomb-list">
+						<div class="row">
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+								<div class="breadcomb-wp">
+									<div class="breadcomb-icon">
+										<i class="notika-icon notika-windows"></i>
+									</div>
+									<div class="breadcomb-ctn">
+										<h2>Available leads</h2>
+										<p>Leads awaiting contact</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+								<div class="breadcomb-report">
+									<button data-toggle="tooltip" data-placement="left" title="Download Report" class="btn"><i class="notika-icon notika-sent"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Breadcomfb area End-->
+
+    <div class="datepicker-area margin-40-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="datepicker-int mg-t-30">
+                        <div class="cmp-tb-hd">
+                            <h4>Filter leads</h4>
+                            <p>Filter leads to narrow selection</p>
+                        </div>
+                        <form method="get">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group nk-datapk-ctm form-elet-mg" id="data_1">
+                                        <label>{{ filter.form.lead_date.label_tag  }}</label>
+                                        <div class="input-group date nk-int-st">
+                                            <span class="input-group-addon"></span>
+                                            {% render_field filter.form.lead_date class="form-control" autocomplete="off" %}
+                                            <!--input type="text" class="form-control" value="03/19/2018"-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="nk-int-mk sl-dp-mn sm-res-mg-t-10">
+                                        <h2>{{ filter.form.status.label_tag  }}</h2>
+                                    </div>
+                                    <div class="bootstrap-select fm-cmp-mg">
+
+                                        {% render_field filter.form.status class="selectpicker" data-live-search="true" autocomplete="off" %}
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group nk-datapk-ctm form-elet-mg" id="data_1">
+                                        <label>{{ filter.form.next_call_date.label_tag  }}</label>
+                                        <div class="input-group date nk-int-st">
+                                            <span class="input-group-addon"></span>
+                                            {% render_field filter.form.next_call_date class="form-control" autocomplete="off" %}
+                                            <!--input type="text" class="form-control" value="03/19/2018"-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-example-int mg-t-15 ">
+                                <input class="btn btn-success notika-btn-success waves-effect mg-t-20 std-background" type="submit" value="Filter" name="filter">
+                                <a href="{% url 'lead_mgt:supervisor_leads' %}" class="btn btn-success notika-btn-success waves-effect mg-t-20 std-background">Clear filters</a>
+                                <input class="btn btn-success notika-btn-success waves-effect mg-t-20 secondary-background" type="submit" value="Download" name="download">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="basic-tb-hd">
+                            <h2>Leads</h2>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID </th>
+                                        <th class="dt-head-center">Date</th>
+                                        <th>Name</th>
+                                        <th class="dt-head-center">Phone</th>
+                                        <th class="dt-head-center">Status</th>
+                                        <th class="dt-head-center">Next call date</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                {% for lead in filter.qs %}
+                                    <tr>
+                                        <td>{{ lead.id }}</td>
+                                        <td>{{ lead.lead_date }}</td>
+                                        <td>{{ lead.title }} {{ lead.first_name }} {{ last_name }}</td>
+                                        <td class="dt-body-center">{{ lead.phone_number }}</td>
+                                        <td class="dt-body-center">{{ lead.status }}</td>
+                                        <td class="dt-body-center">{{ lead.next_call_date }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                                <tfoot>
+                                     <tr>
+                                        <th>ID </th>
+                                        <th class="dt-head-center">Date</th>
+                                        <th>Name</th>
+                                        <th class="dt-head-center">Phone</th>
+                                        <th class="dt-head-center">Status</th>
+                                        <th class="dt-head-center">Next call date</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block script %}
+    <script>
+    function downloadReport() {
+        $.ajax({
+            url: '/download_leads/',
+            method: 'POST',
+            data: {
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                lead_date: $('#id_lead_date').val(),
+                status: $('#id_status').val(),
+                next_call_date: $('#id_next_call_date').val()
+            },
+            success: function (data) {
+                console.log('Did itt!!')
+            }
+
+        })
+        
+    }
+
+    $(document).ready(function () {
+        $('form > input').onchange(function () {
+            $('input[name="download"]').disable()
+        })
+    })
+    </script>
+
+{% endblock %}

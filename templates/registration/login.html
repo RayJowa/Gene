@@ -1,0 +1,55 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GeneInsure</title>
+    <link rel="stylesheet" href="{% static 'lead_mgt/auth.css' %}">
+
+</head>
+
+<body>
+    <section class="login-form-wrap">
+        <img src="{% static 'lead_mgt/img/logo/white_logo.png' %}" id="auth_logo">
+        <!--h1>Login</h1-->
+        {% if form.errors %}
+          <p>Your username and password didn't match. Please try again.</p>
+        {% endif %}
+
+        {% if next %}
+          {% if user.is_authenticated %}
+            <p>Your account doesn't have access to this page. To proceed,
+            please login with an account that has access.</p>
+          {% else %}
+            <p>Please login to see this page.</p>
+          {% endif %}
+        {% endif %}
+        <form class="login-form" method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            {% for hidden_field in form.hidden_fields %}
+                {{ hidden_field.errors }}
+                {{ hidden_field }}
+            {% endfor %}
+
+            {{ form.username.errors }}
+            <label>
+                <input type="text" name="username" autofocus="" required="" id="id_username" placeholder="User name">
+            </label>
+            <label>
+                <input type="password" name="password" required="" id="id_password" placeholder="Password">
+            </label>
+            {{ form.password.errors }}
+            <input type="submit" value="Login">
+        </form>
+        <h5><a href="{% url 'password_reset' %}">Forgot password</a></h5>
+    </section>
+
+
+</body>
+
+</html>

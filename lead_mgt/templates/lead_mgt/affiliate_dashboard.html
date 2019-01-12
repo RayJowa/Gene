@@ -1,0 +1,316 @@
+
+{% extends 'lead_mgt/index-3.html' %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+        <!-- Start Status area -->
+    <div class="notika-status-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
+                    <div class="left_bar notika-shadow  sm-res-mg-t-0">
+                        <div class="avatar">
+                            <h2>{{ user.get_full_name|default:user.username }}</h2>
+                            <p>{{ user.profile.ref_code }}</p>
+                        </div>
+
+                        <div>
+                            <p>Your referral link</p>
+                            <p>{{ link }}</p>
+                        </div>
+                        {% if top_earners %}
+                        <div>
+                            <div class="recent-items-ctn">
+                                <div class="side-title">
+                                    <h3>Top earners</h3>
+                                </div>
+                            </div>
+                            <div class="recent-items-inn">
+                                <table class="table table-inner table-vmiddle">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th style="width: 60px" class="text-center">Points</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for affiliate in top_earners %}
+                                        <tr>
+                                            <td>{{ affiliate.first_name }}</td>
+                                            <td class="f-500 c-cyan text-center">{{ affiliate.points | intcomma }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if month_earners %}
+
+                        <div>
+                            <div class="recent-items-ctn">
+                                <div class="side-title" >
+                                    <h3>{% now "F" %} top earners</h3>
+                                </div>
+                            </div>
+                            <div class="recent-items-inn">
+                                <table class="table table-inner table-vmiddle">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th style="width: 60px">Points</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for affiliate in month_earners %}
+                                        <tr>
+                                            <td>{{ affiliate.first_name }}</td>
+                                            <td class="f-500 c-cyan text-center">{{ affiliate.points | intcomma }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+                </div>
+
+                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 text-center">
+                                <div class="website-traffic-ctn div_centre">
+                                    <h2><span class="counter">{{ total_points | intcomma }}</span></h2>
+                                    <p>Total points</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 text-center">
+                                <div class="website-traffic-ctn div_centre">
+                                    <h2><span class="counter">0</span> Bal</h2>
+                                    <p >Points balance</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 dk-res-mg-t-30 text-center">
+                                <div class="website-traffic-ctn div_centre">
+                                    <h2><span class="counter">{{ request.user.profile.affiliate_total_count | intcomma }}</span></h2>
+                                    <p>Your affiliates</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 dk-res-mg-t-30 text-center">
+                                <div class="website-traffic-ctn div_centre">
+                                    <h2>$<span class="counter">{{ month_earnings }}</span></h2>
+                                    <p>{% now "F" %} earnings</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mg-t-30">
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="rc-it-ltd">
+                            <div class="recent-items-ctn">
+                                <div class="recent-items-title">
+                                    <h2>Recent sales</h2>
+                                </div>
+                            </div>
+                            <div class="recent-items-inn">
+                                {% if recent_conversions %}
+                                    <table class="table table-inner table-vmiddle">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for lead in recent_conversions %}
+                                            <tr>
+                                                <td class="f-500 c-cyan">{{ lead.title }} {{ lead.first_name }} {{ lead.last_name }}</td>
+                                                <td>{{ lead.status }}</td>
+                                            </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <p>You have no sales yet</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <a href="{% url 'lead_mgt:agent_view_lead' %}">
+                        <div class="rc-it-ltd">
+                            <div class="recent-items-ctn">
+                                <div class="recent-items-title">
+                                    <h2>Recent leads</h2>
+                                </div>
+                            </div>
+                            <div class="recent-items-inn">
+                                {% if recent_leads %}
+                                    <table class="table table-inner table-vmiddle">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for lead in recent_leads %}
+                                            <tr>
+                                                <td class="f-500 c-cyan">{{ lead.title }} {{ lead.first_name }} {{ lead.last_name }}</td>
+                                                <td>{{ lead.status }}</td>
+                                            </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <p>You have no leads yet</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        </a>
+                        </div>
+
+                    </div>
+
+                    <div class="row mg-t-30">
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="rc-it-ltd">
+                            <div class="recent-items-ctn">
+                                <div class="recent-items-title">
+                                    <h2>Top affiliates by points</h2>
+                                </div>
+                            </div>
+                            <div class="recent-items-inn">
+                                {% if request.user.referer.all %}
+                                    <table class="table table-inner table-vmiddle">
+                                        <thead>
+                                            <tr>
+                                                <th>Level 1</th>
+                                                <th class="text-center">Level 2</th>
+                                                <th class="text-center">Level 3</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for affiliate in request.user.referer.all|dictsortreversed:'affiliate_1_2_count'|slice:":5" %}
+                                            <tr>
+                                                <td class="f-500 c-cyan">{{ affiliate.user.get_full_name.title }}</td>
+                                                <td class="text-center">{{ affiliate.affiliate_1_count | intcomma }}</td>
+                                                <td class="text-center">{{ affiliate.affiliate_2_count | intcomma }}</td>
+                                            </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <p>You have no affiliates yet, click here to invite friends</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="rc-it-ltd">
+                            <div class="recent-items-ctn">
+                                <div class="recent-items-title">
+                                    <h2>Top affiliates by points</h2>
+                                </div>
+                            </div>
+                            <div class="recent-items-inn">
+                                {% if request.user.referer.all %}
+                                    <table class="table table-inner table-vmiddle">
+                                        <thead>
+                                            <tr>
+                                                <th>Level 1</th>
+                                                <th class="text-center">Level 2</th>
+                                                <th class="text-center">Level 3</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for affiliate in request.user.referer.all|dictsortreversed:'affiliate_1_2_count'|slice:":5" %}
+                                            <tr>
+                                                <td class="f-500 c-cyan">{{ affiliate.user.get_full_name.title }}</td>
+                                                <td class="text-center">{{ affiliate.affiliate_1_count | intcomma }}</td>
+                                                <td class="text-center">{{ affiliate.affiliate_2_count | intcomma }}</td>
+                                            </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <p>You have no affiliates yet, click here to invite friends</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- End Status area-->
+
+
+{% endblock %}
+
+{% block script %}
+    <!--script>
+    	var ctx = document.getElementById("barchart2");
+        var barchart2 = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [{% for label in labels %}"{{ label }}",{% endfor %}],
+                datasets: [{
+                    label: 'Total leads',
+                    data: {{ leads }},
+                    borderWidth: 1,
+                    backgroundColor: 'rgba(132, 165, 62, 0.2)',
+                    borderColor: 'rgba(132, 165, 62, 1)',
+                }, {
+                    label: 'Conversions',
+                    data: {{ conv }},
+                    backgroundColor: 'rgba(90, 195, 214, 0.2)',
+                    borderColor: 'rgba(90, 195, 214, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false,
+                    text: 'Bar Chart Vertical'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+    </script-->
+
+{% endblock %}
